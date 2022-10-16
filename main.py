@@ -27,8 +27,11 @@ async def read_root():
 
 @app.get('/items/{item_id}')
 async def read_item(item_id: int = Path(
-                        title='The ID of item to get'
+                        title='The ID of item to get',
+                        ge=1,
+                        le=1000,
                         ),
+                    size: float = Query(gt=0, lt=10.5),
                     q: Union[str, None] = Query(
                         default=...,
                         title='Awesome Item',
@@ -40,7 +43,7 @@ async def read_item(item_id: int = Path(
                         deprecated=True,
                         )
                     ):
-    return {'item_id': item_id, 'q': q}
+    return {'item_id': item_id, 'size': size, 'q': q}
 
 
 @app.post('/items/')
